@@ -1,8 +1,8 @@
 '''Replace me with your flask app'''
-from ProductionCode.data import bookban_data, goodreads_data
 from datetime import datetime
 from statistics import fmean
 from flask import Flask
+from ProductionCode.data import bookban_data, goodreads_data
 
 def print_book_full(book,bans):
     """modified heavily from team's productioncode.print_book_short"""
@@ -27,7 +27,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def homepage():
-    return "Go to /details/<isbn> for information on a book. Here's a valid ISBN to get you started: 1423134540"
+    return """Go to /details/<isbn> for information on a book.
+    Here's a valid ISBN to get you started: 1423134540"""
 
 @app.route("/details/<isbn>", strict_slashes=False)
 def details_page(isbn):
@@ -38,7 +39,7 @@ def details_page(isbn):
     # at this point there should be exactly one book in matches. test this later
     book = matches[0]
     # totally scuffed fuzzy match patch but should work for now.
-    bans = [ban for ban in bookban_data if 
+    bans = [ban for ban in bookban_data if
         fuzzy_match(ban["title"], book["title"].split(":")[0], True)
     ]
     return print_book_full(book, bans)
