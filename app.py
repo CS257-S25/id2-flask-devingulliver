@@ -5,16 +5,20 @@ from flask import Flask
 from ProductionCode.data import bookban_data, goodreads_data
 
 def print_book_full(book,bans):
-    """modified heavily from team's productioncode.print_book_short"""
+    """modified slightly from team's productioncode.print_book_short"""
+    # title line - title, authors, year (from unix timestamp), isbn
     output = "Details for " + book["title"] + " by "
     output += ", ".join(book["authors"])
     output += f" ({datetime.fromtimestamp(book["year"]/1000).year}, ISBN: {book["isbn"]})"
+    # print the entire summary field
     output += "\nBook details from Goodreads: "+book["summary"]
+    # print entire genre list
     output += "\nGenres: " + ", ".join(book["genres"])
+    # print weighted avg of reviews
     output += f"\nAverage review: {fmean([1,2,3,4,5],weights=book["rating"]):.1f} stars"
     for ban in bans:
         output += f"\nBanned in {ban["district"]}, {ban["state"]} in {ban["ban_date"]}"
-    # using a tiny bit of html for presentation's sake
+    # using a tiny bit of html so the newlines show up
     return output.replace('\n', '<br /><br />')
 
 def fuzzy_match(data, query, partial):
