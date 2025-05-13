@@ -53,12 +53,12 @@ def details_page(isbn):
 
 
 @app.errorhandler(404)
-def page_not_found():
+def page_not_found(_):
     """handle error 404"""
     return "That page doesn't exist. Try going home."
 
 @app.errorhandler(500)
-def python_bug():
+def python_bug(_):
     """handle error 500"""
     return "We totally messed up. Sorry."
 
