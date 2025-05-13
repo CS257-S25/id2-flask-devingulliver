@@ -1,6 +1,6 @@
 """Tests for the app.py Flask app."""
-from app import app
 import unittest
+from app import app
 
 class TestHomepage(unittest.TestCase):
     """Test the index route (/)."""
