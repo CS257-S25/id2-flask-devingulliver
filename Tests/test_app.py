@@ -1,7 +1,6 @@
-import unittest
 """Tests for the app.py Flask app."""
-
 from app import app
+import unittest
 
 class TestHomepage(unittest.TestCase):
     """Test the index route (/)."""
