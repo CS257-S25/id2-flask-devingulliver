@@ -1,4 +1,5 @@
-'''Replace me with your flask app'''
+'''The flask app. READ THIS:
+tested on python 3.13. might fail to start on other versions.'''
 from datetime import datetime
 from statistics import fmean
 from flask import Flask
@@ -31,12 +32,14 @@ app = Flask(__name__)
 
 @app.route("/")
 def homepage():
-    return """Go to /details/<isbn> for information on a book.
+    """homepage containing specific instructions for using the app"""
+    return """Go to /details/&lt;isbn&gt; for information on a book.
     Here's a valid ISBN to get you started: 1423134540"""
 
 @app.route("/details/<isbn>", strict_slashes=False)
 def details_page(isbn):
-    """so much of this should be abstracted out later... sorry"""
+    """the page described on the homepage. fetches book details.
+    so much of this should be abstracted out later... sorry"""
     matches = [book for book in goodreads_data if book["isbn"] == isbn]
     if len(matches) == 0:
         return "No book with that ISBN found!"
@@ -51,10 +54,12 @@ def details_page(isbn):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """handle error 404"""
     return "That page doesn't exist. Try going home."
 
 @app.errorhandler(500)
 def python_bug(e):
+    """handle error 500"""
     return "We totally messed up. Sorry."
 
 if __name__ == "__main__":
