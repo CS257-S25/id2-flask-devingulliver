@@ -6,7 +6,13 @@ from flask import Flask
 from ProductionCode.data import bookban_data, goodreads_data
 
 def print_book_full(book,bans):
-    """modified slightly from team's productioncode.print_book_short"""
+    """modified slightly from team's productioncode.print_book_short
+    arguments:
+    book (dict) - all attributes of the book taken from the dataset
+    bans (list of dicts) - list of all bans for that book, also from dataset
+    ---
+    returns (str) - html representation of book object with bans appended"""
+
     # title line - title, authors, year (from unix timestamp), isbn
     output = "Details for " + book["title"] + " by "
     output += ", ".join(book["authors"])
@@ -23,7 +29,13 @@ def print_book_full(book,bans):
     return output.replace('\n', '<br /><br />')
 
 def fuzzy_match(data, query, partial):
-    """modified slightly from team's productioncode.search"""
+    """modified slightly from team's productioncode.search
+    arguments:
+    data (str) - the data being searched
+    query (str) - the user input string
+    partial (bool) - whether a partial match is allowed
+    ---
+    returns (bool) - whether the query fuzzy-matches the data"""
     if partial:
         return query.lower().strip() in data.lower().strip()
     return query.lower().strip() == data.lower().strip()
@@ -39,7 +51,9 @@ def homepage():
 @app.route("/details/<isbn>", strict_slashes=False)
 def details_page(isbn):
     """the page described on the homepage. fetches book details.
-    so much of this should be abstracted out later... sorry"""
+    so much of this should be abstracted out later... sorry
+    arguments:
+    isbn (str) - the isbn of the book being displayed"""
     matches = [book for book in goodreads_data if book["isbn"] == isbn]
     if len(matches) == 0:
         return "No book with that ISBN found!"
