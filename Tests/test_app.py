@@ -3,6 +3,7 @@ import unittest
 from app import app
 
 class TestEntireApp(unittest.TestCase):
+    """Test all routes of the Flask app in this class."""
     def setUp(self):
         """Prepare the app for testing."""
         self.app = app.test_client()
